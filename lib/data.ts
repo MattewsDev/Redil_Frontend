@@ -53,15 +53,16 @@ export type Evento = {
   registrados: number
   capacidad: number
   conTicket: boolean
+  requiereRegistro: boolean
   day: number
 }
 
 export const eventos: Evento[] = [
-  { id: 'e1', titulo: 'Servicio Dominical', fecha: '2026-06-07', hora: '09:00', lugar: 'Auditorio principal', tipo: 'Servicio', estado: 'Programado', registrados: 540, capacidad: 800, conTicket: false, day: 7 },
-  { id: 'e2', titulo: 'Noche de Jóvenes', fecha: '2026-06-13', hora: '19:00', lugar: 'Salón juvenil', tipo: 'Reunión', estado: 'Programado', registrados: 120, capacidad: 150, conTicket: false, day: 13 },
-  { id: 'e3', titulo: 'Conferencia de Avivamiento', fecha: '2026-06-20', hora: '18:30', lugar: 'Auditorio principal', tipo: 'Conferencia', estado: 'Programado', registrados: 612, capacidad: 800, conTicket: true, day: 20 },
-  { id: 'e4', titulo: 'Retiro de Matrimonios', fecha: '2026-06-27', hora: '08:00', lugar: 'Centro de retiros', tipo: 'Retiro', estado: 'Programado', registrados: 64, capacidad: 80, conTicket: true, day: 27 },
-  { id: 'e5', titulo: 'Bautizos', fecha: '2026-06-22', hora: '10:00', lugar: 'Auditorio principal', tipo: 'Especial', estado: 'Programado', registrados: 28, capacidad: 50, conTicket: false, day: 22 },
+  { id: 'e1', titulo: 'Servicio Dominical', fecha: '2026-06-07', hora: '09:00', lugar: 'Auditorio principal', tipo: 'Servicio', estado: 'Programado', registrados: 540, capacidad: 800, conTicket: false, requiereRegistro: false, day: 7 },
+  { id: 'e2', titulo: 'Noche de Jóvenes', fecha: '2026-06-13', hora: '19:00', lugar: 'Salón juvenil', tipo: 'Reunión', estado: 'Programado', registrados: 120, capacidad: 150, conTicket: false, requiereRegistro: false, day: 13 },
+  { id: 'e3', titulo: 'Conferencia de Avivamiento', fecha: '2026-06-20', hora: '18:30', lugar: 'Auditorio principal', tipo: 'Conferencia', estado: 'Programado', registrados: 612, capacidad: 800, conTicket: true, requiereRegistro: true, day: 20 },
+  { id: 'e4', titulo: 'Retiro de Matrimonios', fecha: '2026-06-27', hora: '08:00', lugar: 'Centro de retiros', tipo: 'Retiro', estado: 'Programado', registrados: 64, capacidad: 80, conTicket: true, requiereRegistro: true, day: 27 },
+  { id: 'e5', titulo: 'Bautizos', fecha: '2026-06-22', hora: '10:00', lugar: 'Auditorio principal', tipo: 'Especial', estado: 'Programado', registrados: 28, capacidad: 50, conTicket: false, requiereRegistro: false, day: 22 },
   { id: 'e6', titulo: 'Reunión de Líderes', fecha: '2026-06-04', hora: '19:30', lugar: 'Sala de juntas', tipo: 'Reunión', estado: 'Finalizado', registrados: 32, capacidad: 40, conTicket: false, day: 4 },
 ]
 

@@ -43,6 +43,7 @@ export const navItems: NavItem[] = [
     children: [
       { label: 'Calendario', href: '/eventos' },
       { label: 'Crear evento', href: '/eventos/nuevo' },
+      { label: 'Plantillas', href: '/eventos?vista=plantillas' },
       { label: 'Formularios públicos', href: '/eventos?vista=formularios' },
     ],
   },
@@ -52,7 +53,7 @@ export const navItems: NavItem[] = [
     icon: QrCode,
     children: [
       { label: 'Registrar', href: '/asistencia' },
-      { label: 'Escáner QR', href: '/asistencia/scanner' },
+      { label: 'Escáner QR', href: '/asistencia/escanear' },
       { label: 'Historial', href: '/asistencia?vista=historial' },
     ],
   },
@@ -62,8 +63,8 @@ export const navItems: NavItem[] = [
     icon: ShieldCheck,
   },
   { label: 'Reportes', href: '/reportes', icon: BarChart3 },
-  { label: 'Facturación', href: '/facturacion', icon: CreditCard },
   { label: 'Configuración', href: '/configuracion', icon: Settings },
+  { label: 'Facturación', href: '/facturacion', icon: CreditCard },
 ]
 
 export const mobileNav: NavItem[] = [

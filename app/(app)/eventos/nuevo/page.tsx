@@ -23,7 +23,7 @@ import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 
-const steps = [
+const allSteps = [
   { n: 1, label: 'Información', icon: Info },
   { n: 2, label: 'Fecha', icon: CalendarClock },
   { n: 3, label: 'Asistencia', icon: UserCheck },
@@ -39,6 +39,24 @@ export default function NuevoEventoPage() {
   const [hora, setHora] = useState('18:30')
   const [lugar, setLugar] = useState('Auditorio principal')
   const [ticket, setTicket] = useState(true)
+  const [requiereRegistro, setRequiereRegistro] = useState(true)
+  const [autoCheckIn, setAutoCheckIn] = useState(true)
+  const [limitarCupos, setLimitarCupos] = useState(false)
+
+  // Mostrar solo pasos 1 y 2 si NO requiere registro, todos los 5 si requiere
+  const visibleSteps = requiereRegistro ? allSteps : allSteps.slice(0, 2)
+
+  const handleNextStep = () => {
+    if (step < visibleSteps.length) {
+      setStep(step + 1)
+    }
+  }
+
+  const handlePrevStep = () => {
+    if (step > 1) {
+      setStep(step - 1)
+    }
+  }
 
   return (
     <div>
@@ -53,7 +71,7 @@ export default function NuevoEventoPage() {
         <div className="flex flex-col gap-5">
           {/* Stepper */}
           <ol className="flex items-center gap-1 overflow-x-auto">
-            {steps.map((s, i) => {
+            {visibleSteps.map((s, i) => {
               const done = step > s.n
               const active = step === s.n
               const Icon = s.icon
@@ -82,7 +100,7 @@ export default function NuevoEventoPage() {
                     </span>
                     <span className="hidden sm:inline">{s.label}</span>
                   </button>
-                  {i < steps.length - 1 && <Icon className="hidden size-3.5 text-border md:inline" />}
+                    {i < visibleSteps.length - 1 && <Icon className="hidden size-3.5 text-border md:inline" />}
                 </li>
               )
             })}
@@ -155,33 +173,87 @@ export default function NuevoEventoPage() {
             {step === 3 && (
               <div className="flex flex-col gap-4">
                 <h3 className="font-semibold text-foreground">Configuración de asistencia</h3>
-                {[
-                  ['Registrar asistencia', 'Habilita el check-in para este evento.', true],
-                  ['Permitir auto check-in', 'Las personas escanean su propio QR.', true],
-                  ['Limitar cupos', 'Bloquea el registro al alcanzar la capacidad.', false],
-                ].map(([t, d, on]) => (
-                  <div
-                    key={t as string}
-                    className="flex items-center justify-between rounded-lg border border-border p-3"
-                  >
+                
+                <div className="flex items-center gap-3 rounded-lg border border-border p-3 mb-2">
+                  <input
+                    type="checkbox"
+                    id="requiereRegistro"
+                    checked={requiereRegistro}
+                    onChange={(e) => setRequiereRegistro(e.target.checked)}
+                    className="h-4 w-4 rounded border-input accent-primary"
+                  />
+                  <div className="flex-1">
+                    <label htmlFor="requiereRegistro" className="text-sm font-medium text-foreground cursor-pointer block">
+                      Requiere registro previo
+                    </label>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      Los asistentes deben registrarse antes. Si está desactivado, solo marcan asistencia en el momento.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="border-t border-border pt-4">
+                  <p className="text-xs text-muted-foreground mb-3 font-medium">Opciones adicionales:</p>
+                  
+                  {/* Registrar asistencia - siempre activo */}
+                  <div className="flex items-center justify-between rounded-lg border border-border p-3 mb-2">
                     <div>
-                      <p className="text-sm font-medium text-foreground">{t}</p>
-                      <p className="text-xs text-muted-foreground">{d}</p>
+                      <p className="text-sm font-medium text-foreground">Registrar asistencia</p>
+                      <p className="text-xs text-muted-foreground">Habilita el check-in para este evento.</p>
                     </div>
-                    <span
-                      className={cn(
-                        'flex h-6 w-11 items-center rounded-full p-0.5 transition-colors',
-                        on ? 'justify-end bg-primary' : 'justify-start bg-muted',
-                      )}
-                    >
+                    <span className="flex h-6 w-11 items-center rounded-full p-0.5 transition-colors justify-end bg-primary">
                       <span className="size-5 rounded-full bg-card shadow-sm" />
                     </span>
                   </div>
-                ))}
+
+                  {/* Permitir auto check-in - solo si requiere registro */}
+                  {requiereRegistro && (
+                    <div className="flex items-center justify-between rounded-lg border border-border p-3 mb-2">
+                      <div>
+                        <p className="text-sm font-medium text-foreground">Permitir auto check-in</p>
+                        <p className="text-xs text-muted-foreground">Las personas escanean su propio QR.</p>
+                      </div>
+                      <span
+                        className={cn(
+                          'flex h-6 w-11 items-center rounded-full p-0.5 transition-colors',
+                          autoCheckIn ? 'justify-end bg-primary' : 'justify-start bg-muted',
+                        )}
+                      >
+                        <span className="size-5 rounded-full bg-card shadow-sm" />
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Limitar cupos - solo si requiere registro */}
+                  {requiereRegistro && (
+                    <div className="flex items-center justify-between rounded-lg border border-border p-3 mb-2">
+                      <div>
+                        <p className="text-sm font-medium text-foreground">Limitar cupos</p>
+                        <p className="text-xs text-muted-foreground">Bloquea el registro al alcanzar la capacidad.</p>
+                      </div>
+                      <span
+                        className={cn(
+                          'flex h-6 w-11 items-center rounded-full p-0.5 transition-colors',
+                          limitarCupos ? 'justify-end bg-primary' : 'justify-start bg-muted',
+                        )}
+                      >
+                        <span className="size-5 rounded-full bg-card shadow-sm" />
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                {!requiereRegistro && (
+                  <div className="rounded-lg bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 p-3">
+                    <p className="text-xs text-blue-700 dark:text-blue-300">
+                      <strong>Nota:</strong> Este evento no requiere registro previo. Los pasos QR y Formulario no serán necesarios. Presiona "Crear evento" para publicar.
+                    </p>
+                  </div>
+                )}
               </div>
             )}
 
-            {step === 4 && (
+            {step === 4 && requiereRegistro && (
               <div className="flex flex-col gap-4">
                 <h3 className="font-semibold text-foreground">Configuración QR</h3>
                 <div className="flex items-center gap-4 rounded-lg border border-border p-4">
@@ -209,7 +281,7 @@ export default function NuevoEventoPage() {
               </div>
             )}
 
-            {step === 5 && (
+            {step === 5 && requiereRegistro && (
               <div className="flex flex-col gap-4">
                 <div className="flex items-center justify-between">
                   <h3 className="font-semibold text-foreground">Formulario público</h3>
@@ -246,13 +318,17 @@ export default function NuevoEventoPage() {
             <div className="mt-6 flex items-center justify-between border-t border-border pt-5">
               <Button
                 variant="ghost"
-                onClick={() => setStep((s) => Math.max(1, s - 1))}
+                onClick={handlePrevStep}
                 className={cn(step === 1 && 'invisible')}
               >
                 <ArrowLeft className="size-4" /> Atrás
               </Button>
-              {step < 5 ? (
-                <Button onClick={() => setStep((s) => Math.min(5, s + 1))}>
+              {step === 3 && !requiereRegistro ? (
+                <Button render={<Link href="/eventos" />}>
+                  Crear evento <Check className="size-4" />
+                </Button>
+              ) : step < visibleSteps.length ? (
+                <Button onClick={handleNextStep}>
                   Continuar <ArrowRight className="size-4" />
                 </Button>
               ) : (
