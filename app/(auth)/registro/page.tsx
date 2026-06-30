@@ -18,21 +18,22 @@ export default function RegistroPage() {
         Comienza tu prueba gratuita
       </Badge>
       <div className="mb-6">
-        <h1 className="text-2xl font-bold tracking-tight text-foreground">Crea tu iglesia</h1>
+        <h1 className="text-2xl font-bold tracking-tight text-foreground">Crea tu cuenta</h1>
         <p className="mt-1.5 text-sm text-muted-foreground">
-          Registra tu congregación y empieza en minutos.
+          Regístrate y empieza en minutos.
         </p>
       </div>
 
       <form className="flex flex-col gap-4" action="/onboarding">
         <div className="flex flex-col gap-1.5">
-          <Label htmlFor="nombre">Nombre completo</Label>
-          <Input id="nombre" placeholder="David Mejía" required />
+          <Label htmlFor="nombres">Nombres</Label>
+          <Input id="nombres" placeholder="Juan Carlos" required />
         </div>
         <div className="flex flex-col gap-1.5">
-          <Label htmlFor="iglesia">Nombre de la iglesia</Label>
-          <Input id="iglesia" placeholder="Iglesia Central" required />
+          <Label htmlFor="apellidos">Apellidos</Label>
+          <Input id="apellidos" placeholder="Gómez Mendoza" required />
         </div>
+        
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="email">Correo electrónico</Label>
           <Input id="email" type="email" placeholder="tu@iglesia.com" required />
@@ -65,32 +66,11 @@ export default function RegistroPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="pais">País</Label>
-            <select
-              id="pais"
-              className="h-10 rounded-lg border border-input bg-card px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/25"
-            >
-              <option>Colombia</option>
-              <option>México</option>
-              <option>Argentina</option>
-              <option>Perú</option>
-              <option>Chile</option>
-              <option>España</option>
-            </select>
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="ciudad">Ciudad</Label>
-            <Input id="ciudad" placeholder="Bogotá" required />
-          </div>
-        </div>
-
         <Button type="submit" size="lg" className="mt-1 h-11 w-full text-sm">
-          Crear Iglesia
+          Comenzar ahora
         </Button>
-        <p className="text-center text-xs text-muted-foreground">
-          Al continuar aceptas los Términos y la Política de privacidad de REDIL.
+        <p className="text-xs text-muted-foreground">
+          Al continuar, aceptas los Términos de Servicio y la Política de Privacidad de REDIL.
         </p>
       </form>
 
